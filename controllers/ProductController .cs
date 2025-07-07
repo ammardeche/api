@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.controllers
 {
+
     [Route("api/products")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -20,18 +21,27 @@ namespace api.controllers
 
         [HttpGet]
 
-        public IActionResult GetProducts()
+        public IActionResult getAllProducts()
         {
             var products = _context.product.ToList();
+
+            if (products == null || !products.Any())
+            {
+                return NotFound("No products found.");
+            }
+
             return Ok(products);
         }
+
         [HttpGet("{id}")]
-        public IActionResult GetProduct([FromRoute] int id)
+
+        public IActionResult getProductById([FromRoute] int id)
         {
             var product = _context.product.Find(id);
+
             if (product == null)
             {
-                return NotFound();
+                return NotFound($"Product with ID {id} not found.");
             }
             return Ok(product);
         }
