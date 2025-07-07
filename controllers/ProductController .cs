@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.data;
+using api.Mapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.controllers
@@ -37,7 +38,6 @@ namespace api.controllers
             }
             return Ok(product);
         }
-        [HttpPost]
 
 
 
