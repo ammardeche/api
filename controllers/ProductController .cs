@@ -13,38 +13,33 @@ namespace api.controllers
     public class ProductController : ControllerBase
     {
 
-        private readonly ApplicationDBContext _context;
+        private readonly ApplicationDBContext context;
         public ProductController(ApplicationDBContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
+
         [HttpGet]
-
-        public IActionResult getAllProducts()
+        public IActionResult GetAllProducts()
         {
-            var products = _context.product.ToList();
-
-            if (products == null || !products.Any())
-            {
-                return NotFound("No products found.");
-            }
-
+            var products = context.product.ToList();
             return Ok(products);
         }
 
         [HttpGet("{id}")]
-
-        public IActionResult getProductById([FromRoute] int id)
+        public IActionResult GetProductById([FromRoute] int id)
         {
-            var product = _context.product.Find(id);
-
+            var product = context.product.Find(id);
             if (product == null)
             {
-                return NotFound($"Product with ID {id} not found.");
+                return NotFound();
             }
             return Ok(product);
         }
+        [HttpPost]
+
+
 
     }
 }
