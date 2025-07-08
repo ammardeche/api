@@ -18,5 +18,15 @@ namespace api.Mapper
                 Price = product.Price
             };
         }
+
+        public static Product toCreateProductDto(this CreateProductRequestDto StockDto)
+        {
+            return new Product
+            {
+                Name = StockDto.Name,
+                Description = StockDto.Description,
+                Price = StockDto.Price
+            };
+        }
     }
 }

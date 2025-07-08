@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.data;
+using api.DTOs.product;
 using api.Mapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,11 +21,12 @@ namespace api.controllers
             this.context = context;
         }
 
-
         [HttpGet]
         public IActionResult GetAllProducts()
         {
-            var products = context.product.ToList();
+            var products = context.product.ToList().Select(
+                p => p.ToProductDto()
+            );
             return Ok(products);
         }
 
@@ -36,9 +38,18 @@ namespace api.controllers
             {
                 return NotFound();
             }
-            return Ok(product);
+            return Ok(product.ToProductDto());
         }
 
+        [HttpPost]
+
+        public IActionResult CreateProduct([FromBody] CreateProductRequestDto stockDto)
+        {
+            var stockModel = stockDto.toCreateProductDto();
+            context.product.Add(stockModel);
+            context.SaveChanges();
+            return CreatedAtAction(nameof(GetProductById), new { id = stockModel.Id }, stockModel.ToProductDto());
+        }
 
 
     }
