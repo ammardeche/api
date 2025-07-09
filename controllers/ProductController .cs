@@ -21,6 +21,8 @@ namespace api.controllers
             this.context = context;
         }
 
+
+
         [HttpGet]
         public IActionResult GetAllProducts()
         {
@@ -55,6 +57,39 @@ namespace api.controllers
             // using CreatedAtAction to return the URI of the created resource
             return CreatedAtAction(nameof(GetProductById), new { id = ProductModel.Id }, ProductModel.ToProductDto());
         }
+
+        [HttpPut("{id}")]
+
+        public IActionResult updateProduct([FromRoute] int id, [FromBody] UpdateProductRequestDto request)
+        {
+            var currentProduct = context.product.FirstOrDefault(p => p.Id == id);
+
+            if (currentProduct == null)
+            {
+                return NotFound();
+            }
+
+            currentProduct.Name = request.Name;
+            currentProduct.Description = request.Description;
+            currentProduct.Price = request.Price;
+
+            context.SaveChanges();
+            return Ok(currentProduct.ToProductDto());
+        }
+
+        [HttpDelete("{id}")]
+
+        public IActionResult removeProduct([FromRoute] int id)
+        {
+            var product = context.product.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            context.product.Remove(product);
+            return NoContent();
+        }
+
 
     }
 }
