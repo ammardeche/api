@@ -6,6 +6,7 @@ using api.data;
 using api.DTOs.product;
 using api.Mapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.controllers
 {
@@ -24,18 +25,17 @@ namespace api.controllers
 
 
         [HttpGet]
-        public IActionResult GetAllProducts()
+        public async Task<IActionResult> GetAllProducts()
         {
-            var products = context.product.ToList().Select(
-                p => p.ToProductDto()
-            );
+            var products = await context.product.ToListAsync();
+            var productdto = context.product.Select(p => p.ToProductDto());
             return Ok(products);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetProductById([FromRoute] int id)
+        public async Task<IActionResult> GetProductById([FromRoute] int id)
         {
-            var product = context.product.Find(id);
+            var product = await context.product.FindAsync(id);
             if (product == null)
             {
                 return NotFound();
@@ -45,13 +45,13 @@ namespace api.controllers
 
         [HttpPost]
 
-        public IActionResult CreateProduct([FromBody] CreateProductRequestDto request)
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequestDto request)
         {
 
             // return to us the created productD
             var ProductModel = request.CreateProductDto();
-            context.product.Add(ProductModel);
-            context.SaveChanges();
+            await context.product.AddAsync(ProductModel);
+            await context.SaveChangesAsync();
             // Return the created product with a 201 Created response
             // along with the location of the new resource
             // using CreatedAtAction to return the URI of the created resource
@@ -60,9 +60,9 @@ namespace api.controllers
 
         [HttpPut("{id}")]
 
-        public IActionResult updateProduct([FromRoute] int id, [FromBody] UpdateProductRequestDto request)
+        public async Task<IActionResult> updateProduct([FromRoute] int id, [FromBody] UpdateProductRequestDto request)
         {
-            var currentProduct = context.product.FirstOrDefault(p => p.Id == id);
+            var currentProduct = await context.product.FirstOrDefaultAsync(p => p.Id == id);
 
             if (currentProduct == null)
             {
@@ -73,20 +73,21 @@ namespace api.controllers
             currentProduct.Description = request.Description;
             currentProduct.Price = request.Price;
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return Ok(currentProduct.ToProductDto());
         }
 
         [HttpDelete("{id}")]
 
-        public IActionResult removeProduct([FromRoute] int id)
+        public async Task<IActionResult> removeProduct([FromRoute] int id)
         {
-            var product = context.product.FirstOrDefault(p => p.Id == id);
+            var product = await context.product.FirstOrDefaultAsync(p => p.Id == id);
             if (product == null)
             {
                 return NotFound();
             }
             context.product.Remove(product);
+            await context.SaveChangesAsync();
             return NoContent();
         }
 
