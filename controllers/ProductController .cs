@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.data;
+using api.DTOs.product;
+using api.Mapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.controllers
@@ -13,37 +15,45 @@ namespace api.controllers
     public class ProductController : ControllerBase
     {
 
-        private readonly ApplicationDBContext _context;
+        private readonly ApplicationDBContext context;
         public ProductController(ApplicationDBContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         [HttpGet]
-
-        public IActionResult getAllProducts()
+        public IActionResult GetAllProducts()
         {
-            var products = _context.product.ToList();
-
-            if (products == null || !products.Any())
-            {
-                return NotFound("No products found.");
-            }
-
+            var products = context.product.ToList().Select(
+                p => p.ToProductDto()
+            );
             return Ok(products);
         }
 
         [HttpGet("{id}")]
-
-        public IActionResult getProductById([FromRoute] int id)
+        public IActionResult GetProductById([FromRoute] int id)
         {
-            var product = _context.product.Find(id);
-
+            var product = context.product.Find(id);
             if (product == null)
             {
-                return NotFound($"Product with ID {id} not found.");
+                return NotFound();
             }
-            return Ok(product);
+            return Ok(product.ToProductDto());
+        }
+
+        [HttpPost]
+
+        public IActionResult CreateProduct([FromBody] CreateProductRequestDto request)
+        {
+
+            // return to us the created productD
+            var ProductModel = request.CreateProductDto();
+            context.product.Add(ProductModel);
+            context.SaveChanges();
+            // Return the created product with a 201 Created response
+            // along with the location of the new resource
+            // using CreatedAtAction to return the URI of the created resource
+            return CreatedAtAction(nameof(GetProductById), new { id = ProductModel.Id }, ProductModel.ToProductDto());
         }
 
     }
