@@ -16,17 +16,20 @@ namespace api.Mapper
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price
+
             };
         }
 
-        public static Product toCreateProductDto(this CreateProductRequestDto StockDto)
+        public static Product CreateProductDto(this CreateProductRequestDto productDto)
         {
             return new Product
             {
-                Name = StockDto.Name,
-                Description = StockDto.Description,
-                Price = StockDto.Price
+                Name = productDto.Name,
+                Description = productDto.Description,
+                Price = productDto.Price
             };
         }
+
+
     }
 }

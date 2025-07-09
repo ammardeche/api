@@ -43,14 +43,18 @@ namespace api.controllers
 
         [HttpPost]
 
-        public IActionResult CreateProduct([FromBody] CreateProductRequestDto stockDto)
+        public IActionResult CreateProduct([FromBody] CreateProductRequestDto request)
         {
-            var stockModel = stockDto.toCreateProductDto();
-            context.product.Add(stockModel);
-            context.SaveChanges();
-            return CreatedAtAction(nameof(GetProductById), new { id = stockModel.Id }, stockModel.ToProductDto());
-        }
 
+            // return to us the created productD
+            var ProductModel = request.CreateProductDto();
+            context.product.Add(ProductModel);
+            context.SaveChanges();
+            // Return the created product with a 201 Created response
+            // along with the location of the new resource
+            // using CreatedAtAction to return the URI of the created resource
+            return CreatedAtAction(nameof(GetProductById), new { id = ProductModel.Id }, ProductModel.ToProductDto());
+        }
 
     }
 }

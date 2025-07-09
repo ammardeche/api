@@ -164,3 +164,4 @@ C:\Users\Surface\Desktop\ApiAppp\api\obj\Debug\net9.0\api.sourcelink.json
 C:\Users\Surface\Desktop\ApiAppp\api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Surface\Desktop\ApiAppp\api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Surface\Desktop\ApiAppp\api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Surface\Desktop\ApiAppp\api\bin\Debug\net9.0\Scalar.AspNetCore.dll
