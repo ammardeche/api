@@ -18,12 +18,10 @@ namespace api.controllers
     public class ProductController : ControllerBase
     {
 
-        private readonly ApplicationDBContext context;
-        private readonly IProductRepository productRepo;
-        public ProductController(ApplicationDBContext context, IProductRepository prodRepo)
+        private readonly IProductService productSer;
+        public ProductController(IProductService prodser)
         {
-            this.productRepo = prodRepo;
-            this.context = context;
+            productSer = prodser;
         }
 
 
@@ -31,7 +29,7 @@ namespace api.controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            var products = await productRepo.getAllProductAsync();
+            var products = await productSer.getAllProductAsync();
             var prodDto = products.Select(p => p.ToProductDto()).ToList();
 
             if (prodDto == null)
@@ -46,7 +44,7 @@ namespace api.controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductById([FromRoute] int id)
         {
-            var product = await productRepo.getProductbyIdAsync(id);
+            var product = await productSer.getProductbyIdAsync(id);
 
             if (product == null)
             {
@@ -68,7 +66,7 @@ namespace api.controllers
                 Price = request.Price
             };
 
-            var createdProduct = await productRepo.CreateProduct(product);
+            var createdProduct = await productSer.CreateProduct(product);
             return CreatedAtAction(nameof(GetProductById), new { id = createdProduct.Id }, createdProduct.ToProductDto());
 
         }
@@ -84,16 +82,16 @@ namespace api.controllers
                 Price = request.Price,
             };
 
-            var updatedProduct = await productRepo.UpdateProductAsync(id, updatedData);
+            var updatedProduct = await productSer.UpdateProductAsync(id, updatedData);
 
-            return Ok(updatedProduct.ToProductDto());
+            return Ok(updatedProduct?.ToProductDto());
         }
 
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> removeProduct([FromRoute] int id)
         {
-            var isDelated = await productRepo.DeleteProductAsync(id);
+            var isDelated = await productSer.DeleteProductAsync(id);
 
             if (!isDelated)
             {
