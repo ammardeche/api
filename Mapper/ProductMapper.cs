@@ -15,7 +15,8 @@ namespace api.Mapper
             {
                 Id = product.Id,
                 Name = product.Name,
-                Price = product.Price
+                Price = product.Price,
+                Comments = product.Comments.Select(p => p.ToCommentDto()).ToList()
 
             };
         }

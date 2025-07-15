@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.DTOs.comment;
+using api.models;
 
 namespace api.DTOs.product
 {
@@ -10,6 +12,8 @@ namespace api.DTOs.product
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
+
+        public List<CommentDto> Comments { get; set; }
 
     }
 }

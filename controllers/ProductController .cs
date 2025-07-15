@@ -25,7 +25,6 @@ namespace api.controllers
         }
 
 
-
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
