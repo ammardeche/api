@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api.models
+namespace api.DTOs.product
 {
-    public class Product
+    public class CreateProductRequestDto
     {
-        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
-
-        public List<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

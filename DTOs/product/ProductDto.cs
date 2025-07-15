@@ -2,16 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.DTOs.comment;
+using api.models;
 
-namespace api.models
+namespace api.DTOs.product
 {
-    public class Product
+    public class ProductDto
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
 
-        public List<Comment> Comments { get; set; } = new List<Comment>();
+        public List<CommentDto> Comments { get; set; }
+
     }
 }
