@@ -12,6 +12,6 @@ namespace api.models
         public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
 
-        List<Comment> Comments { get; set; } = new List<Comment>();
+        public List<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

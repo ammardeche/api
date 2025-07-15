@@ -17,7 +17,6 @@ namespace api.Mapper
                 Id = ModelComment.Id,
                 Content = ModelComment.Content,
                 CreatedAt = ModelComment.CreatedAt,
-                ProductId = ModelComment.ProductId,
             };
 
         }

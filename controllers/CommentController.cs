@@ -6,6 +6,7 @@ using api.data;
 using api.DTOs.comment;
 using api.Interface;
 using api.Mapper;
+using api.models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.controllers
@@ -25,6 +26,7 @@ namespace api.controllers
         [HttpGet]
 
         public async Task<IActionResult> getAllAsync()
+
         {
             var comments = await _commentRepository.GetAllCommentAsync();
 
@@ -39,6 +41,22 @@ namespace api.controllers
             return Ok(commentDto);
         }
 
+        [HttpGet("{id}")]
+
+        public async Task<IActionResult> getByIdAsync([FromRoute] int id)
+        {
+            var comment = await _commentRepository.getByIdAsync(id);
+
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(comment.ToCommentDto());
+        }
+
 
     }
+
+
 }
