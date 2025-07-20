@@ -17,5 +17,7 @@ namespace api.Interface
         Task<Product?> UpdateProductAsync(int id, Product updatedProduct);
         Task<bool> DeleteProductAsync(int id);
 
+        Task<bool> ProductExistAsync(int id);
+
     }
 }

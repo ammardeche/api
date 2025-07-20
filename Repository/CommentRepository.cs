@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.data;
+using api.DTOs.comment;
 using api.Interface;
 using api.models;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,16 @@ namespace api.Repository
             _context = context;
         }
 
+
+        public async Task<Comment> CreateAsync(Comment commentModel)
+        {
+            await _context.comments.AddAsync(commentModel);
+            Console.WriteLine($"Creating comment for product: {commentModel.Id}");
+            await _context.SaveChangesAsync();
+
+            return commentModel;
+        }
+
         public async Task<List<Comment>> GetAllCommentAsync()
         {
             return await _context.comments.ToListAsync();
@@ -30,7 +41,5 @@ namespace api.Repository
         {
             return await _context.comments.FindAsync(id);
         }
-
-
     }
 }

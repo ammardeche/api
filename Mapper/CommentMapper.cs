@@ -15,11 +15,24 @@ namespace api.Mapper
             return new CommentDto
             {
                 Id = ModelComment.Id,
+                Title = ModelComment.Title,
                 Content = ModelComment.Content,
                 CreatedAt = ModelComment.CreatedAt,
+                ProductId = ModelComment.ProductId
             };
-
         }
+
+        public static Comment ToCreateDto(this CreateCommentDto commentModel, int ProductId)
+        {
+            return new Comment
+            {
+                Title = commentModel.Title,
+                Content = commentModel.Content,
+                ProductId = ProductId,
+            };
+        }
+
+
 
     }
 }

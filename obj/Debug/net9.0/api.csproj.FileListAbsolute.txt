@@ -251,3 +251,5 @@ c:\Users\Surface\Desktop\ApiAppp\api\bin\Debug\net9.0\zh-Hant\Microsoft.VisualSt
 C:\Users\Surface\Desktop\ApiAppp\api\bin\Debug\net9.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\Surface\Desktop\ApiAppp\api\bin\Debug\net9.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\Surface\Desktop\ApiAppp\api\bin\Debug\net9.0\Newtonsoft.Json.Bson.dll
+C:\Users\Surface\Desktop\ApiAppp\api\bin\Debug\net9.0\Dumpify.dll
+C:\Users\Surface\Desktop\ApiAppp\api\bin\Debug\net9.0\Spectre.Console.dll
